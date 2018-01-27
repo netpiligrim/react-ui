@@ -18,13 +18,13 @@ class App extends Component {
         this.fetchIP();
     }
 
-    fetchWeatherData = city => {
+    fetchWeatherData = (city, country_code) => {
         const baseUrl = `http://api.openweathermap.org`;
         const path = `/data/2.5/weather`;
         const appId = `459fc1107972f9ca8e39abe5f2583722`;
         const query = `units=metric&lang=ru&appid=${appId}`;
 
-        fetch(`${baseUrl}${path}?q=${city}&${query}`)
+        fetch(`${baseUrl}${path}?q=${city},${country_code}&${query}`)
             .then(response => response.json())
             .then(data => {
                 const date = new Date();
@@ -44,7 +44,7 @@ class App extends Component {
     fetchIP = () => {
         fetch('//freegeoip.net/json/')
             .then(response => response.json())
-            .then(({ city }) => this.fetchWeatherData(city))
+            .then(({ city, country_code }) => this.fetchWeatherData(city, country_code))
             .catch(error => console.log(error));
     }
 
